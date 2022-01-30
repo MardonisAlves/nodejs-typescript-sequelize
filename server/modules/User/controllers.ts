@@ -10,7 +10,7 @@ class UserController{
     }
 
     createUser(req:Request , res:Response){
-        res.status(httpStatus.OK).json({
+        res.status(httpStatus.CREATED).json({
             message:'ok'
         })
     }
