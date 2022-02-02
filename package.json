@@ -7,7 +7,7 @@
     "start": "NODE_ENV=development  node build/server.js",
     "test": "jest  --coverage  --forceExit",
     "build": "rm -rf build/ && tsc",
-    "dev": "NODE_ENV=development ./node_modules/.bin/ts-node server/server.ts"
+    "dev": "nodemon --watch 'server/' --exec 'ts-node server/server.ts' -e ts"
   },
   "author": "Mardonis Alves B",
   "license": "ISC",
@@ -37,6 +37,7 @@
     "@types/supertest": "^2.0.11",
     "@types/validator": "^13.7.1",
     "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
     "sequelize": "^6.14.1",
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.3",
