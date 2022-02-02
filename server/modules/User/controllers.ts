@@ -3,8 +3,7 @@ import HTTPStatus from 'http-status';
 import userService from '../../modules/User/services';
 
 class UserController {
-
-
+  
     getAll(req: Request, res: Response) {
         userService.getAll()
             .then((data: any) => {
@@ -54,7 +53,7 @@ class UserController {
             .then(data => {
                 res.status(HTTPStatus.OK).json({ 'data': 'Usuário deletado com sucesso!' })
             })
-            .catch(err => { res.status(HTTPStatus.INTERNAL_SERVER_ERROR).json({ 'err': 'Error no servidor interno' }) 
+            .catch(err => { res.status(HTTPStatus.INTERNAL_SERVER_ERROR).json({ 'err': 'Error no servidor interno' })
         })
 
     }
