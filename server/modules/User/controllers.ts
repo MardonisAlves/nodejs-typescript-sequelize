@@ -4,6 +4,7 @@ import userService from '../../modules/User/services';
 import {onError} from '../../api/responses/errorHandlers';
 import {onSuccess} from '../../api/responses/successHandlers';
 import {dbErrorHandlers}  from '../../config/dbErrorHandlers';
+import {onCreate}  from '../../api/responses/onCreate';
 
 class UserController {
     getAll(req: Request, res: Response) {
@@ -16,7 +17,7 @@ class UserController {
         const { user } = req.body
         if (!user) throw new Error();
         userService.create(user)
-            .then(_.partial(onSuccess, res))
+            .then(_.partial(onCreate, res))
             .catch(_.partial(dbErrorHandlers, res))
             .catch(_.partial(onError, res, 'Error ao inserir nono usuario'));
     }
@@ -29,8 +30,9 @@ class UserController {
     }
 
     updateUser(req: Request, res: Response) {
-        const { user } = req.body;
+        const user = req.body
         const { id } = req.params;
+        console.log('controller' + user)
         userService.update(user, parseInt(id))
             .then(_.partial(onSuccess, res))
             .catch(_.partial(onError, res, `Falha ao atualiazar usuario`));
