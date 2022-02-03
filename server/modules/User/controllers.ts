@@ -6,6 +6,7 @@ import {onSuccess} from '../../api/responses/successHandlers';
 import {dbErrorHandlers}  from '../../config/dbErrorHandlers';
 import {onCreate}  from '../../api/responses/onCreate';
 
+
 class UserController {
     getAll(req: Request, res: Response) {
         userService.getAll()
