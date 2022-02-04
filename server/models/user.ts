@@ -3,6 +3,8 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 import sequelize from '../config/sequelizeConnection';
 
 class User extends Model {
+  id: any;
+	email: any;
   /**
    * Helper method for defining associations.
    * This method is not a part of Sequelize lifecycle.

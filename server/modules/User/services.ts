@@ -1,7 +1,9 @@
 import modelUser from '../../models/user';
-import IUser from '../../modules/User/interface';
+
 
 class User {
+
+    
 
     create(user: any) {
         return modelUser.create(user)

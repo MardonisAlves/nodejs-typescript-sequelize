@@ -3,7 +3,7 @@
     "username": "root",
     "password": "root",
     "database": "ts-api",
-    "host": "172.17.0.5",
+    "host": "172.17.0.2",
     "dialect": "postgres"
   },
   "test": {
