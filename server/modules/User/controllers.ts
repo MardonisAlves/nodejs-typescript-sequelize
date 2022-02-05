@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import userService from '../../modules/User/services';
 import Handlers from '../../api/responses/handlers';
 class UserController {
+
     getAll(req: Request, res: Response) {
         userService.getAll()
             .then(_.partial(Handlers.onSuccess ,res))
@@ -45,4 +46,4 @@ class UserController {
 }
 
 
-export default UserController
+export default new  UserController();
