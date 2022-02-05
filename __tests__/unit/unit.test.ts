@@ -1,43 +1,24 @@
 import User from '../../server/modules/User/services';
 import { describe, it, expect  } from '@jest/globals';
-describe('Testes unitarios do service', () => {
 
+describe('Testes unitarios do service', () => {
+    let id :any;
+    const novoUser:any = {
+        name: "novo user",
+        email: 'email.default.com.br',
+        password: '12345678'
+    }
     describe('Metodo Create' , () =>{
-        const novoUser:any = {
-            name: "novo user",
-            email: 'email@email',
-            password: '12345678'
-        }
         it('POST / Deve criar um novo usuario', async () => {
             const userAll = await User.create(novoUser)
             .then((data:any) => {
-              expect(data.name).toContain('novo user');
-              expect(data.email).toContain('email@email');
-              expect(data.password).toContain('12345678');
-            });
-        });
-    });
-
-    describe('Metodo Update', () => {
-        const updateUser:any = {
-        name: 'update user name',
-        email: 'updateemail@email'
-    }
-        it('Deve atualizar um  usuario', async () =>{
-
-            const update = await User.update(updateUser , 600)
-            .then((data:any) => {
-              expect(data.id).toEqual(600);
+               expect(data).not.toEqual(expect.arrayContaining([novoUser]));
+               id = data.dataValues.id
             });
         });
     });
 
     describe('Metodo Get Users', () => {
-         const novoUser:any = {
-            name: 'novo user',
-            email: 'email@email',
-            password: '12345678'
-        }
         it('Deve retornar uma  lista de usuarios', async() =>{
            await User.getAll()
             .then((data:any) => {
@@ -45,11 +26,10 @@ describe('Testes unitarios do service', () => {
             });
         });
 
-        it('Deve retornar uma  usuario', async() =>{
-
-            await User.getById(600)
+        it('Deve retornar um  usuario', async() =>{
+            await User.getById(id)
             .then((data:any) => {
-              expect(data.id).toEqual(600);
+              expect(data.id).toEqual(id);
             });
         });
 
@@ -63,9 +43,22 @@ describe('Testes unitarios do service', () => {
 
     });
 
+    describe('Metodo Update', () => {
+        const updateUser:any = {
+        name: 'update user name',
+        email: 'email.default.com.br'
+    }
+        it('Deve atualizar um  usuario', async () =>{
+            const update = await User.update(updateUser , id)
+            .then((data:any) => {
+              expect(data.id).toEqual(id)
+            });
+        });
+    });
+
     describe('Metodo Delete', () => {
         it('Deve deletar um  usuario', async () =>{
-            const deleteUser = await User.delete(214).then((data:any) => {
+            const deleteUser = await User.delete(id).then((data:any) => {
             expect(true).toBeTruthy();
             })
         });

@@ -8,50 +8,38 @@ import * as jwt from 'jwt-simple';
 describe('TESTE DE INTEGRAÇÂO', () => {
     'use strict'
     let token:any;
-    const userDefault = {
-        name: 'Usuario de Teste',
-        email: 'email.default.com.br',
-        password: 'teste'
+    let id:any;
+    
+    const userDefault:any = {
+        "user": {
+            "name": "Usuario novo user de itergração",
+            "email": "email.default.com.br",
+            "password": "teste"
+        }
     }
 
-    // beforeEach((done) =>{
-    //     const del = User.destroy({
-    //         where:{}
-    //     })
-    //     .then(async () =>{
-    //     const user = await User.create(userDefault);
-    //     }).then(async (user:any) => {
-    //         const res = await request(app)
-    //             .post('/token')
-    //             .send({email: 'email.default.com.br',   password: 'teste'})
-    //             expect(res.status).toBe(HTTPStatus.OK);
-    //             token = res.body.token;
-                
-            
-    //     });
-    // });
 
-     describe('POST /api/users/create', () => {
-        const user:any = {
-            "user": {
-                "name": "Usuario novo user de itergração",
-                "email": "email.novo.com.br",
-                "password": "teste123"
-            }
-        }
+     describe('POST / create user e get token', () => {
+        it('Deve criar um novo user', async () => {
+            const res = await request(app)
+                .post('/api/users/create')
+                .send(userDefault)
+            expect(res.status).toBe(HTTPStatus.CREATED);
+            expect(res.body).not.toEqual(expect.arrayContaining([userDefault]));
+            id = res.body.data.id
 
-    describe('POST /token' , () =>{
+        });
+
         it('Deve retornar token' ,async () =>{
             const res = await request(app)
             .post('/token')
-            .send({email: 'email.novo.com.br',   password: 'teste123'})
+            .send({email: 'email.default.com.br',   password: 'teste'})
             expect(res.status).toBe(HTTPStatus.OK);
             token = res.body.token;
         });
     });
     
     describe('GET /api/users/all', () => {
-
         it('Deve retornar uma lista de usuarios', async () => {
             const res = await request(app)
                 .get('/api/users/all')
@@ -67,37 +55,26 @@ describe('TESTE DE INTEGRAÇÂO', () => {
     describe('GET /api/users/:id', () => {
         it('Deve retornar um usuario', async () => {
             const res = await request(app)
-                .get(`/api/users/${412}`)
+                .get(`/api/users/${id}`)
                  .set('Content-Type', 'application/json')
                 .set('Authorization', `JWt ${token}`)
             expect(res.status).toBe(HTTPStatus.OK);
-            expect(res.body).not.toEqual(expect.arrayContaining([userDefault]))
+            expect(res.body).not.toEqual(expect.arrayContaining([userDefault]));
         });
-    });
+   });
 
-   
 
-        it('Deve criar um novo user', async () => {
-            const res = await request(app)
-                .post('/api/users/create')
-                .send(user)
-                .set('Content-Type', 'application/json')
-                .set('Authorization', `JWt ${token}`)
-            expect(res.status).toBe(HTTPStatus.CREATED);
-            expect(res.body).not.toEqual(expect.arrayContaining([user]));
-        });
-    });
 
 
     describe('PUT /api/users/:id/update', () => {
         const userUpdate:any = {
             name: 'Update tester',
-            email: 'update@gmail.com' 
+            email: 'email.default.com.br' 
         }
 
         it('Deve atualizar um usuario', async () => {
             const res = await request(app)
-                .put(`/api/users/${401}/update`)
+                .put(`/api/users/${id}/update`)
                 .send(userUpdate)
                 .set('Content-Type', 'application/json')
                 .set('Authorization', `JWt ${token}`)
@@ -106,14 +83,13 @@ describe('TESTE DE INTEGRAÇÂO', () => {
         });
     });
     
-    describe('DELETE /api/users/:id', () => {
-        const data = {
-            data: 1
 
-        }
+
+    describe('DELETE /api/users/:id', () => {
+        const data = { data: 1 }
         it('Deve deletar um usuario', async () => {
             const res = await request(app)
-                .delete(`/api/users/${616}/destroy`)
+                .delete(`/api/users/${id}/destroy`)
                 .set('Content-Type', 'application/json')
                 .set('Authorization', `JWt ${token}`)
             expect(res.status).toBe(HTTPStatus.OK);

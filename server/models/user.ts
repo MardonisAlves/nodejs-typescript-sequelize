@@ -1,4 +1,4 @@
-
+import bcrypt from 'bcrypt'
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import sequelize from '../config/sequelizeConnection';
 
@@ -25,6 +25,7 @@ User.init({
   email: {
     type: DataTypes.STRING,
     allowNull: false,
+     unique: true,
     validate: {
       notEmpty: true
     }
@@ -40,6 +41,19 @@ User.init({
   sequelize,
   modelName: 'User',
 });
+
+User.beforeCreate((user) => {
+  return hasPassword(user)
+})
+
+User.beforeUpdate((user) => {
+  return hasPassword(user)
+})
+
+function hasPassword(user:any){
+const salt = bcrypt.genSaltSync(10);
+user.set('password', bcrypt.hashSync(user.password , salt));
+}
 
 export default User;
 

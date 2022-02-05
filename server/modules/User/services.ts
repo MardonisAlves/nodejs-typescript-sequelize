@@ -3,8 +3,6 @@ import modelUser from '../../models/user';
 
 class User {
 
-    
-
     create(user: any) {
         return modelUser.create(user)
     }
@@ -27,7 +25,11 @@ class User {
         });
     }
     update(user:any, id: number): Promise<modelUser | null> {
-          return  modelUser.update(user, { where: { id: id }, fields: ['name', 'email'] }).then(() => { return modelUser.findByPk(id) });
+          return  modelUser.update(user, { where: { id: id }, 
+            fields: ['name', 'email'],
+            hooks:true,
+            individualHooks:true 
+        }).then(() => { return modelUser.findByPk(id) });
 
     }
 
