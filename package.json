@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Api com type script es6 , express , sequelize",
   "main": "server/server.ts",
+  
   "scripts": {
     "start": "NODE_ENV=development  node build/server.js",
     "test": "jest  --coverage  --forceExit",
