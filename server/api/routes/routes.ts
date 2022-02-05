@@ -4,12 +4,9 @@ import TokenRoutes from '../../modules/auth/auth';
 class Routes {
     
     private router :UserRoutes;
-    private tokenroutes;
 
     constructor() {
         this.router = new  UserRoutes();
-        this.tokenroutes = new TokenRoutes();
-
     }
 
     initRoutes(app: Application, auth:any): void {
@@ -18,7 +15,7 @@ class Routes {
         app.route('/api/users/:id').all(auth.config().authenticate()).get(this.router.findOne);
         app.route('/api/users/:id/update').all(auth.config().authenticate()).put(this.router.update);
         app.route('/api/users/:id/destroy').all(auth.config().authenticate()).delete(this.router.destroy);
-        app.route('/token').post(this.tokenroutes.auth);
+        app.route('/token').post(TokenRoutes.auth);
     }
 }
 

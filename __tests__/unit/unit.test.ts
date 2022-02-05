@@ -13,6 +13,7 @@ describe('Testes unitarios do service', () => {
             const userAll = await User.create(novoUser)
             .then((data:any) => {
                expect(data).not.toEqual(expect.arrayContaining([novoUser]));
+               console.log(data)
                id = data.dataValues.id
             });
         });
@@ -34,7 +35,6 @@ describe('Testes unitarios do service', () => {
         });
 
         it('Deve retornar email do   usuario', async() =>{
-
              await User.getByEmail("email.default.com.br")
             .then((data:any) => {
               expect(data.email).toEqual("email.default.com.br");
